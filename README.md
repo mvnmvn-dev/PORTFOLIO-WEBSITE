@@ -29,8 +29,8 @@ Then open the local URL shown by the command.
 ## Before publishing
 
 - Add a real, clear photo to the About section.
-- Add privacy-safe screenshots (sample data only) to the project cards.
-- Confirm each project's status label (Live, Capstone, Concept) is accurate.
+- Add appropriate, verified project screenshots when final image assets are provided; project-card images are temporarily omitted.
+- Re-verify each live deployment URL and status before publishing; the iPhone showcase is an unofficial concept, not affiliated with Apple.
 - Confirm the email address, support terms, and ownership terms.
 - Add a LinkedIn link to the Contact section if you maintain a profile.
 - Once the final domain is set, add `og:url`, a canonical link, and an absolute `og:image` URL in `index.html`.

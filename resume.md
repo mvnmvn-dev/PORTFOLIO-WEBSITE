@@ -15,11 +15,11 @@ I build websites, business systems, and practical digital tools that make everyd
 
 ## Selected work
 
-- **Archon Nell Faci-Admin System** — A workspace for facility requests, records, and follow-up work. [ani-fams.onrender.com](https://ani-fams.onrender.com/)
-- **OSAS (Bestlink College of the Philippines)** — A campus safety and security system for incidents, patrols, and emergency response. [bcp-osas.up.railway.app](https://bcp-osas.up.railway.app/)
-- **LACS (Valenzuela City)** — A legislative agenda and calendar system for documents, sessions, and reports. Capstone project. [lacs.spvalenzuela.com](https://lacs.spvalenzuela.com/)
-- **Oxford Suites Makati RMS** — A restaurant management system for ordering, kitchen, inventory, and billing. [oxfordsuitesmakati.io](https://oxfordsuitesmakati.io/)
-- **iPhone 16 Pro Showcase** — An unofficial Next.js concept site with a configurator and interactive demos. [apple-website-pearl-tau.vercel.app](https://apple-website-pearl-tau.vercel.app/)
+- **LACS — Legislative Agenda and Calendar System** — Project Manager & Lead Developer; deployed online on its designated domain. [Live demo](https://lacs.spvalenzuela.com/)
+- **OSAS (Bestlink College of the Philippines)** — Web Developer; deployed online. Campus safety and security workflows. [Live demo](https://bcp-osas.up.railway.app/)
+- **Oxford Suites Makati RMS** — Web Developer; deployed online. Restaurant operations management. [Live demo](https://oxfordsuitesmakati.io/)
+- **Archon Nell Faci-Admin System** — Web Developer; deployed online. Facilities requests, records, and operational follow-ups. [Live demo](https://ani-fams.onrender.com/)
+- **iPhone 16 Pro Showcase** — Web Developer; deployed unofficial Next.js concept, not affiliated with Apple. [Concept demo](https://apple-website-pearl-tau.vercel.app/)
 
 ## Approach
 
@@ -27,7 +27,7 @@ Understand the goal → Plan the priorities → Build and test → Deliver with 
 
 ## Technologies
 
-HTML · CSS · JavaScript · PHP · Laravel · Blade · Dart · Flutter · MySQL · REST APIs · Role-based workflows
+HTML · CSS · JavaScript · React · Node.js · PHP · Laravel · Blade · Dart · Flutter · MySQL · PostgreSQL · REST APIs · Role-based workflows
 
 ## Contact
 

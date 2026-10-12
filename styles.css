@@ -106,6 +106,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 /* ---------- Section intros ---------- */
 .section-intro { display: grid; grid-template-columns: 30% 1fr; gap: 32px; margin-bottom: 64px; }
 .section-intro p:not(.eyebrow) { max-width: 520px; color: var(--soft); margin: 18px 0 0; }
+.section-intro .project-disclaimer { margin-top: 12px; font-size: 14px; }
 
 /* ---------- Projects ---------- */
 .project-list { display: grid; gap: 56px; }
@@ -127,6 +128,11 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .status { color: #171717; }
 .project-body h3 { font: 700 clamp(1.5rem, 2.5vw, 2.1rem) var(--font-heading); letter-spacing: -.04em; margin: 28px 0 10px; line-height: 1.1; }
 .project-body p { color: var(--soft); max-width: 420px; margin: 0 0 18px; }
+.project-role { display: flex; flex-wrap: wrap; gap: 10px; align-items: baseline; }
+.project-role b, .project-domain b { color: var(--muted); font: 12px var(--font-mono); letter-spacing: .06em; text-transform: uppercase; }
+.project-domain { display: grid; gap: 4px; margin: 0 0 20px; }
+.project-domain a { width: fit-content; font-weight: 600; text-decoration: underline; text-decoration-color: #999; text-underline-offset: 4px; }
+.project-domain a:hover { text-decoration-color: currentColor; }
 .project-body .outcome { font-size: 14px; color: var(--text); border-left: 2px solid var(--text); padding-left: 14px; }
 .outcome b { display: block; font: 12px var(--font-mono); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 4px; color: var(--muted); }
 .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 3px; margin-bottom: 28px; }
@@ -178,8 +184,8 @@ details p { max-width: 620px; color: var(--soft); font-size: 14px; margin: 0 28p
 .about-activity { grid-column: 2; grid-row: 1; }
 .about-copy > p:not(.eyebrow) { color: var(--soft); max-width: 600px; }
 .stack-list { border-top: 1px solid var(--border); margin-top: 34px; }
-.stack-list div { display: flex; gap: 32px; padding: 15px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
-.stack-list b { width: 150px; }
+.stack-list div { display: grid; grid-template-columns: 150px minmax(0, 1fr); align-items: start; column-gap: 32px; padding: 15px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
+.stack-list b { width: auto; }
 .stack-list span { color: var(--soft); }
 .about-links { display: flex; gap: 24px; margin-top: 30px; }
 
