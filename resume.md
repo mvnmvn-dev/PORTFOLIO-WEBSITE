@@ -31,6 +31,6 @@ HTML · CSS · JavaScript · PHP · Laravel · Blade · Dart · Flutter · MySQL
 
 ## Contact
 
-Email: hello@jonomervin.dev  
+Email: work.jmagno@gmail.com  
 GitHub: github.com/jono-mervin and github.com/mvnmvn-dev  
 Languages: English and Filipino

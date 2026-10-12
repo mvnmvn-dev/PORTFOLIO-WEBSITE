@@ -49,10 +49,13 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 .site-nav { display: flex; align-items: center; gap: 32px; font-size: 14px; }
 .site-nav a { min-height: 44px; display: inline-flex; align-items: center; }
-.site-nav a:not(.nav-cta) { transition: opacity var(--ease); }
+.site-nav a:not(.nav-cta) { position: relative; transition: opacity var(--ease); }
 .site-nav a:not(.nav-cta):hover, .text-link:hover { opacity: .62; }
+.site-nav a:not(.nav-cta)::after { content: ''; position: absolute; left: 0; right: 0; bottom: 6px; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform var(--ease); }
+.site-nav a[aria-current="location"]:not(.nav-cta)::after { transform: scaleX(1); }
 
-.nav-cta { gap: 8px; transition: background var(--ease), color var(--ease), transform var(--ease); }
+.nav-cta { position: relative; gap: 8px; transition: background var(--ease), color var(--ease), transform var(--ease); }
+.nav-cta[aria-current="location"]::after { content: ''; position: absolute; left: 16px; right: 16px; bottom: 6px; height: 1px; background: currentColor; }
 
 .menu-toggle { display: none; background: none; border: 0; width: 44px; height: 44px; padding: 11px; }
 .menu-toggle i { display: block; height: 1px; background: var(--text); margin: 6px 0; }
@@ -323,6 +326,7 @@ details p { max-width: 620px; color: var(--soft); font-size: 14px; margin: 0 28p
   html { scroll-behavior: auto; }
   .js .reveal { opacity: 1; transform: none; transition: none; }
   .button, .site-nav a { transition: none; }
+  .site-nav a::after { transition: none; }
   .section-transition > .container, .section-transition:before { animation: none; }
   .section-pad { scroll-margin-top: 68px; }
 }

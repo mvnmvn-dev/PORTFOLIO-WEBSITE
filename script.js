@@ -22,6 +22,34 @@ nav?.querySelectorAll('a').forEach((link) => {
   link.addEventListener('click', closeMenu);
 });
 
+const sectionNavLinks = [...(nav?.querySelectorAll('a[href^="#"]') ?? [])]
+  .map((link) => ({ link, section: document.querySelector(link.getAttribute('href')) }))
+  .filter(({ section }) => section);
+let navUpdatePending = false;
+
+function updateCurrentNavSection() {
+  if (navUpdatePending) return;
+  navUpdatePending = true;
+
+  window.requestAnimationFrame(() => {
+    const marker = window.innerHeight * 0.32;
+    const current = sectionNavLinks.find(({ section }) => {
+      const bounds = section.getBoundingClientRect();
+      return bounds.top <= marker && bounds.bottom > marker;
+    });
+
+    sectionNavLinks.forEach(({ link }) => {
+      if (link === current?.link) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    });
+    navUpdatePending = false;
+  });
+}
+
+window.addEventListener('scroll', updateCurrentNavSection, { passive: true });
+window.addEventListener('resize', updateCurrentNavSection);
+updateCurrentNavSection();
+
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape' && nav?.classList.contains('open')) {
     closeMenu();
@@ -73,6 +101,25 @@ if ('IntersectionObserver' in window && !prefersReducedMotion.matches) {
 
 const yearEl = document.querySelector('#year');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+const manilaTime = document.querySelector('#manila-time');
+if (manilaTime) {
+  const manilaTimeFormatter = new Intl.DateTimeFormat('en-PH', {
+    timeZone: 'Asia/Manila',
+    hour: 'numeric',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: true,
+  });
+  const updateManilaTime = () => {
+    const now = new Date();
+    manilaTime.textContent = `${manilaTimeFormatter.format(now)} PHT (UTC+8)`;
+    manilaTime.dateTime = now.toISOString();
+  };
+
+  updateManilaTime();
+  window.setInterval(updateManilaTime, 1_000);
+}
 
 // GitHub activity: April 1 to October 31, 2026. October is year to date,
 // so the calendar stops at today's date until the month is complete.
@@ -216,6 +263,6 @@ form?.addEventListener('submit', (event) => {
   }
   const subject = encodeURIComponent(`Portfolio enquiry from ${name}`);
   const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
-  status.textContent = 'Opening your email app… If nothing opens, write to hello@jonomervin.dev.';
-  window.location.href = `mailto:hello@jonomervin.dev?subject=${subject}&body=${body}`;
+  status.textContent = 'Opening your email app… If nothing opens, write to work.jmagno@gmail.com.';
+  window.location.href = `mailto:work.jmagno@gmail.com?subject=${subject}&body=${body}`;
 });
