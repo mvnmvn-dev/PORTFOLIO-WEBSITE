@@ -44,20 +44,15 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .site-header.scrolled { border-color: var(--border); }
 .header-inner { min-height: 78px; display: flex; align-items: center; justify-content: space-between; }
 
-.wordmark { display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-heading); font-size: 12px; letter-spacing: .12em; }
+.wordmark { display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-heading); font-size: 14px; letter-spacing: .12em; }
 .wordmark span { display: grid; place-items: center; width: 30px; height: 30px; background: var(--dark); color: #fff; font-size: 10px; letter-spacing: 0; }
 
 .site-nav { display: flex; align-items: center; gap: 32px; font-size: 14px; }
-.site-nav a { min-height: 44px; display: inline-flex; align-items: center; transition: opacity var(--ease); }
+.site-nav a { min-height: 44px; display: inline-flex; align-items: center; }
+.site-nav a:not(.nav-cta) { transition: opacity var(--ease); }
 .site-nav a:not(.nav-cta):hover, .text-link:hover { opacity: .62; }
 
-.nav-cta { position: relative; overflow: hidden; isolation: isolate; display: inline-flex; align-items: center; justify-content: center; min-height: 40px; border: 1px solid #1c1c1c; background: #1c1c1c; color: #f6f4ef; padding: 0 18px; gap: 8px; line-height: 1; transition: color .55s cubic-bezier(.22, 1, .36, 1), border-color .55s cubic-bezier(.22, 1, .36, 1), transform .55s cubic-bezier(.22, 1, .36, 1), box-shadow .55s cubic-bezier(.22, 1, .36, 1); }
-.nav-cta:before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(135deg, #f7f3ea 0%, #fff 55%, #efe8dc 100%); transform: translate3d(0, 101%, 0); transition: transform .65s cubic-bezier(.22, 1, .36, 1); }
-.nav-cta span { display: inline-block; line-height: 1; transition: transform .55s cubic-bezier(.22, 1, .36, 1); }
-.nav-cta:hover { color: #1a1714; border-color: #cfc6b8; transform: translateY(-1px); box-shadow: 0 10px 24px rgba(28, 28, 28, .12); }
-.nav-cta:hover:before { transform: translate3d(0, 0, 0); }
-.nav-cta:hover span { transform: translate(2px, -2px); }
-.nav-cta:active { transform: translateY(0); box-shadow: 0 4px 12px rgba(28, 28, 28, .1); }
+.nav-cta { gap: 8px; transition: background var(--ease), color var(--ease), transform var(--ease); }
 
 .menu-toggle { display: none; background: none; border: 0; width: 44px; height: 44px; padding: 11px; }
 .menu-toggle i { display: block; height: 1px; background: var(--text); margin: 6px 0; }
@@ -230,6 +225,27 @@ details p { max-width: 620px; color: var(--soft); font-size: 14px; margin: 0 28p
 .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
 .footer-inner p { color: #999; font-size: 12px; margin: 0; }
 .footer-inner .wordmark { color: #fff; }
+
+/* ---------- Desktop readability ---------- */
+@media (min-width: 901px) {
+  body { font-size: 17px; line-height: 1.7; }
+  .site-nav { font-size: 15px; }
+  .eyebrow, .hero-foot, .project-meta, .outcome b,
+  .service > span, .process-list > li > span,
+  .github-calendar-role, .github-calendar-head > span,
+  .contrib-meta { font-size: 13px; }
+  .project-body .outcome, .service p, .process-list p,
+  .together-details p, .together-details dl, details p,
+  .stack-list div, .about-activity-lede { font-size: 16px; }
+  .project-link { font-size: 15px; }
+  .tag-row span { font-size: 13px; }
+  .calendar-loading, .calendar-error { font-size: 14px; }
+  .contrib-months { font-size: 12px; }
+  .activity-fallback { font-size: 14px; }
+  .contact-form label, .languages { font-size: 15px; }
+  .form-note, .form-status { font-size: 14px !important; }
+  .footer-inner p { font-size: 13px; }
+}
 
 /* ---------- Motion ---------- */
 /* Content stays visible if JavaScript is unavailable: .js is added in <head>. */
