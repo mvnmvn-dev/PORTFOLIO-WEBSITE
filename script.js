@@ -6,6 +6,12 @@ window.addEventListener('scroll', () => {
   header?.classList.toggle('scrolled', window.scrollY > 8);
 }, { passive: true });
 
+function closeMenu() {
+  nav?.classList.remove('open');
+  menuToggle?.setAttribute('aria-expanded', 'false');
+  document.body.classList.remove('menu-open');
+}
+
 menuToggle?.addEventListener('click', () => {
   const isOpen = nav.classList.toggle('open');
   menuToggle.setAttribute('aria-expanded', String(isOpen));
@@ -13,11 +19,18 @@ menuToggle?.addEventListener('click', () => {
 });
 
 nav?.querySelectorAll('a').forEach((link) => {
-  link.addEventListener('click', () => {
-    nav.classList.remove('open');
-    menuToggle?.setAttribute('aria-expanded', 'false');
-    document.body.classList.remove('menu-open');
-  });
+  link.addEventListener('click', closeMenu);
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && nav?.classList.contains('open')) {
+    closeMenu();
+    menuToggle?.focus();
+  }
+});
+
+window.matchMedia('(min-width: 681px)').addEventListener('change', (event) => {
+  if (event.matches) closeMenu();
 });
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -34,6 +47,11 @@ internalLinks.forEach((link) => {
     void target.offsetWidth;
     target.classList.add('section-transition');
     target.scrollIntoView({ behavior: prefersReducedMotion.matches ? 'auto' : 'smooth', block: 'start' });
+
+    // Move keyboard and screen-reader focus to the section that was scrolled to.
+    if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+    target.focus({ preventScroll: true });
+
     window.setTimeout(() => target.classList.remove('section-transition'), 950);
   });
 });
@@ -53,9 +71,12 @@ if ('IntersectionObserver' in window && !prefersReducedMotion.matches) {
   revealItems.forEach((item) => item.classList.add('is-visible'));
 }
 
-document.querySelector('#year').textContent = new Date().getFullYear();
+const yearEl = document.querySelector('#year');
+if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-const GITHUB_RANGE = { start: '2026-01-01', end: '2026-12-31', year: 2026 };
+// GitHub activity: April 1 to October 31, 2026. October is year to date,
+// so the calendar stops at today's date until the month is complete.
+const GITHUB_RANGE = { start: '2026-04-01', end: '2026-10-31', year: 2026, label: 'April to October 2026' };
 const GITHUB_LEVELS = ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'];
 const MONTH_LABELS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -143,7 +164,7 @@ function renderContributionGraph(container, username, weeks) {
       <div class="contrib-grid">${cells}</div>
     </div>
     <div class="contrib-meta">
-      <span>${total} contribution${total === 1 ? '' : 's'} in ${GITHUB_RANGE.year}</span>
+      <span>${total} contribution${total === 1 ? '' : 's'}, Apr–Oct 2026</span>
       <div class="contrib-legend" aria-hidden="true">
         <span>Less</span>
         ${GITHUB_LEVELS.map((color) => `<i style="background:${color}"></i>`).join('')}
@@ -151,11 +172,14 @@ function renderContributionGraph(container, username, weeks) {
       </div>
     </div>
   `;
-  container.setAttribute('aria-label', `GitHub contribution calendar for ${username}: ${total} contributions in ${GITHUB_RANGE.year}`);
+  container.setAttribute('aria-label', `GitHub contribution calendar for ${username}: ${total} contributions, ${GITHUB_RANGE.label}`);
 }
 
 async function loadGithubCalendars() {
   const calendars = document.querySelectorAll('[data-github-user]');
+  const today = formatDateKey(new Date());
+  const endKey = today < GITHUB_RANGE.end ? today : GITHUB_RANGE.end;
+
   await Promise.all([...calendars].map(async (calendar) => {
     const username = calendar.dataset.githubUser;
     const graph = calendar.querySelector('.github-calendar-graph');
@@ -165,7 +189,7 @@ async function loadGithubCalendars() {
       const response = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=${GITHUB_RANGE.year}`);
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const data = await response.json();
-      const weeks = buildContributionWeeks(data.contributions || [], GITHUB_RANGE.start, GITHUB_RANGE.end);
+      const weeks = buildContributionWeeks(data.contributions || [], GITHUB_RANGE.start, endKey);
       renderContributionGraph(graph, username, weeks);
     } catch {
       graph.innerHTML = `<p class="calendar-error">Could not load this calendar. <a href="https://github.com/${username}" target="_blank" rel="noreferrer">View ${username} on GitHub</a></p>`;
@@ -192,6 +216,6 @@ form?.addEventListener('submit', (event) => {
   }
   const subject = encodeURIComponent(`Portfolio enquiry from ${name}`);
   const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
-  status.textContent = 'Opening your email app…';
+  status.textContent = 'Opening your email app… If nothing opens, write to hello@jonomervin.dev.';
   window.location.href = `mailto:hello@jonomervin.dev?subject=${subject}&body=${body}`;
 });

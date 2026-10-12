@@ -1,8 +1,10 @@
 # John Mervin Agno
 
-## Web & Systems Developer
+## Web & Systems Developer · JONO Projects
 
 I build websites, business systems, and practical digital tools that make everyday work simpler.
+
+**Availability:** Open to freelance projects and full-time roles.
 
 ## Focus
 
@@ -13,11 +15,11 @@ I build websites, business systems, and practical digital tools that make everyd
 
 ## Selected work
 
-- **Facilities Admin Management System** — A workspace for facility requests, records, and follow-up work.
-- **OSAS** — A campus safety and security management system for incidents, patrols, and emergency response.
-- **LACS** — A legislative agenda and calendar system for documents, sessions, and reports.
-- **Oxford Suites Makati RMS** — A restaurant management system for ordering, kitchen, inventory, and billing.
-- **Apple Website Showcase** — A Next.js iPhone 16 Pro marketing site with configurator and interactive demos.
+- **Archon Nell Faci-Admin System** — A workspace for facility requests, records, and follow-up work. [ani-fams.onrender.com](https://ani-fams.onrender.com/)
+- **OSAS (Bestlink College of the Philippines)** — A campus safety and security system for incidents, patrols, and emergency response. [bcp-osas.up.railway.app](https://bcp-osas.up.railway.app/)
+- **LACS (Valenzuela City)** — A legislative agenda and calendar system for documents, sessions, and reports. Capstone project. [lacs.spvalenzuela.com](https://lacs.spvalenzuela.com/)
+- **Oxford Suites Makati RMS** — A restaurant management system for ordering, kitchen, inventory, and billing. [oxfordsuitesmakati.io](https://oxfordsuitesmakati.io/)
+- **iPhone 16 Pro Showcase** — An unofficial Next.js concept site with a configurator and interactive demos. [apple-website-pearl-tau.vercel.app](https://apple-website-pearl-tau.vercel.app/)
 
 ## Approach
 
@@ -25,10 +27,10 @@ Understand the goal → Plan the priorities → Build and test → Deliver with 
 
 ## Technologies
 
-HTML · CSS · JavaScript · Web applications · Databases · Workflow design
+HTML · CSS · JavaScript · PHP · Laravel · Blade · Dart · Flutter · MySQL · REST APIs · Role-based workflows
 
 ## Contact
 
 Email: hello@jonomervin.dev  
-GitHub: github.com/jono-mervin  
+GitHub: github.com/jono-mervin and github.com/mvnmvn-dev  
 Languages: English and Filipino
