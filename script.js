@@ -1,6 +1,44 @@
 const header = document.querySelector('[data-header]');
 const menuToggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('#site-nav');
+const themeToggle = document.querySelector('.theme-toggle');
+const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+const themeStorageKey = 'jono-projects-theme';
+const systemThemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+let hasSavedTheme = false;
+
+try {
+  const savedTheme = localStorage.getItem(themeStorageKey);
+  hasSavedTheme = savedTheme === 'dark' || savedTheme === 'light';
+} catch {}
+
+function applyTheme(theme, remember = false) {
+  const darkMode = theme === 'dark';
+  document.documentElement.dataset.theme = darkMode ? 'dark' : 'light';
+  themeToggle?.setAttribute('aria-pressed', String(darkMode));
+  const label = darkMode ? 'Switch to light mode' : 'Switch to dark mode';
+  themeToggle?.setAttribute('aria-label', label);
+  themeToggle?.setAttribute('title', label);
+  themeColorMeta?.setAttribute('content', darkMode ? '#121212' : '#ffffff');
+
+  if (remember) {
+    hasSavedTheme = true;
+    try {
+      localStorage.setItem(themeStorageKey, darkMode ? 'dark' : 'light');
+    } catch {}
+  }
+}
+
+applyTheme(document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light');
+themeToggle?.addEventListener('click', () => {
+  applyTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark', true);
+});
+
+const followSystemTheme = (event) => {
+  if (!hasSavedTheme) applyTheme(event.matches ? 'dark' : 'light');
+};
+if (systemThemeQuery.addEventListener) systemThemeQuery.addEventListener('change', followSystemTheme);
+else systemThemeQuery.addListener?.(followSystemTheme);
 
 window.addEventListener('scroll', () => {
   header?.classList.toggle('scrolled', window.scrollY > 8);
@@ -124,7 +162,7 @@ if (manilaTime) {
 // GitHub activity: April 1 to October 31, 2026. October is year to date,
 // so the calendar stops at today's date until the month is complete.
 const GITHUB_RANGE = { start: '2026-04-01', end: '2026-10-31', year: 2026, label: 'April to October 2026' };
-const GITHUB_LEVELS = ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'];
+const GITHUB_LEVELS = [0, 1, 2, 3, 4].map((level) => `var(--contrib-level-${level})`);
 const MONTH_LABELS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 function parseDateKey(key) {
@@ -253,6 +291,8 @@ form?.addEventListener('submit', (event) => {
   const email = form.elements.email.value.trim();
   const message = form.elements.message.value.trim();
   const status = form.querySelector('.form-status');
+  const fallback = form.querySelector('.form-fallback');
+  const gmailDraftLink = form.querySelector('.gmail-draft-link');
   if (!name || !email || !message) {
     status.textContent = 'Please complete your name, email, and message.';
     return;
@@ -261,8 +301,19 @@ form?.addEventListener('submit', (event) => {
     status.textContent = 'Please enter a valid email address.';
     return;
   }
-  const subject = encodeURIComponent(`Portfolio enquiry from ${name}`);
-  const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
-  status.textContent = 'Opening your email app… If nothing opens, write to work.jmagno@gmail.com.';
-  window.location.href = `mailto:work.jmagno@gmail.com?subject=${subject}&body=${body}`;
+  const subjectText = `Portfolio enquiry from ${name}`;
+  const bodyText = `Name: ${name}\nEmail: ${email}\n\n${message}`;
+  const mailto = new URL('mailto:work.jmagno@gmail.com');
+  mailto.searchParams.set('subject', subjectText);
+  mailto.searchParams.set('body', bodyText);
+  const gmail = new URL('https://mail.google.com/mail/');
+  gmail.searchParams.set('view', 'cm');
+  gmail.searchParams.set('fs', '1');
+  gmail.searchParams.set('to', 'work.jmagno@gmail.com');
+  gmail.searchParams.set('su', subjectText);
+  gmail.searchParams.set('body', bodyText);
+  gmailDraftLink.href = gmail.toString();
+  fallback.hidden = false;
+  status.textContent = 'Opening your email app. If no draft appears, use the Gmail fallback below; review and send the message yourself.';
+  window.location.href = mailto.toString();
 });
