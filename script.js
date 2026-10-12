@@ -2,6 +2,7 @@ const header = document.querySelector('[data-header]');
 const menuToggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('#site-nav');
 const themeToggle = document.querySelector('.theme-toggle');
+const themeLabel = document.querySelector('.theme-label');
 const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 const themeStorageKey = 'jono-projects-theme';
 const systemThemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
@@ -16,6 +17,7 @@ function applyTheme(theme, remember = false) {
   const darkMode = theme === 'dark';
   document.documentElement.dataset.theme = darkMode ? 'dark' : 'light';
   themeToggle?.setAttribute('aria-pressed', String(darkMode));
+  if (themeLabel) themeLabel.textContent = darkMode ? 'Dark' : 'Light';
   const label = darkMode ? 'Switch to light mode' : 'Switch to dark mode';
   themeToggle?.setAttribute('aria-label', label);
   themeToggle?.setAttribute('title', label);
@@ -119,6 +121,68 @@ internalLinks.forEach((link) => {
     target.focus({ preventScroll: true });
 
     window.setTimeout(() => target.classList.remove('section-transition'), 950);
+  });
+});
+
+// Animate native details panels without removing their built-in keyboard and
+// screen-reader behavior. The element's height is measured before and after
+// toggling so both opening and closing ease naturally.
+document.querySelectorAll('details').forEach((details) => {
+  const summary = details.querySelector(':scope > summary');
+  if (!summary) return;
+
+  summary.addEventListener('click', (event) => {
+    if (prefersReducedMotion.matches || details.dataset.animating === 'true') return;
+
+    event.preventDefault();
+    details.dataset.animating = 'true';
+    details.classList.add('is-animating');
+    let finished = false;
+
+    const finish = (open) => {
+      if (finished) return;
+      finished = true;
+      details.open = open;
+      details.style.height = '';
+      details.classList.remove('is-animating');
+      delete details.dataset.animating;
+    };
+
+    if (!details.open) {
+      details.open = true;
+      const closedHeight = summary.offsetHeight;
+      const openHeight = details.scrollHeight;
+      details.style.height = `${closedHeight}px`;
+      requestAnimationFrame(() => {
+        details.style.height = `${openHeight}px`;
+      });
+      const onOpen = (event) => {
+        if (event.target !== details || event.propertyName !== 'height') return;
+        details.removeEventListener('transitionend', onOpen);
+        finish(true);
+      };
+      details.addEventListener('transitionend', onOpen);
+      window.setTimeout(() => {
+        details.removeEventListener('transitionend', onOpen);
+        finish(true);
+      }, 480);
+    } else {
+      const openHeight = details.scrollHeight;
+      details.style.height = `${openHeight}px`;
+      requestAnimationFrame(() => {
+        details.style.height = `${summary.offsetHeight}px`;
+      });
+      const onClose = (event) => {
+        if (event.target !== details || event.propertyName !== 'height') return;
+        details.removeEventListener('transitionend', onClose);
+        finish(false);
+      };
+      details.addEventListener('transitionend', onClose);
+      window.setTimeout(() => {
+        details.removeEventListener('transitionend', onClose);
+        finish(false);
+      }, 480);
+    }
   });
 });
 
