@@ -29,7 +29,8 @@ Then open the local URL shown by the command.
 ## Before publishing
 
 - Add a real, clear photo to the About section.
-- The project cards use the supplied screenshots with CSS grayscale/contrast and pixelated image rendering; clicking one opens its full-size original. The `.jpg` image copies are byte-identical to the supplied `.png`-named JPEG files so static hosting can identify them correctly.
+- The five featured case-study cards use the supplied screenshots with CSS grayscale/contrast and pixelated image rendering; clicking one opens its full-size original. The `.jpg` image copies are byte-identical to the supplied `.png`-named JPEG files so static hosting can identify them correctly.
+- The seven additional public-repository cards are intentionally text-only with screenshot placeholders. Add the screenshots when ready; keep the same monochrome treatment and review them for private or sensitive information before publishing.
 - Review every screenshot for names, account details, addresses, and safety or operational data; replace or redact anything that should not be public before publishing.
 - Re-verify each live deployment URL and status before publishing; the iPhone showcase is an unofficial concept, not affiliated with Apple.
 - Confirm the email address, support terms, and ownership terms.
